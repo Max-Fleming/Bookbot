@@ -1,11 +1,19 @@
 from stats import *  # noqa: F403
-import time
+import sys
 # Open a text file and print the contents out to the console
 
 
 def main():
-    selected_filepath = "Books/frankenstein.txt"
-    print_report(selected_filepath)
+    if len(sys.argv) == 2:
+        try:
+            selected_filepath = sys.argv[1]
+            print_report(selected_filepath)
+        except FileNotFoundError:
+            print("Filepath given is invalid. Please try again")
+            sys.exit(1)
+    else:
+        print("Please provide a filepath. Example: python3 main.py <path_to_book>")
+        sys.exit(1)
 
 
 def print_report(filepath):
@@ -13,7 +21,6 @@ def print_report(filepath):
     char_count = list_of_counted_chars(filepath)
     print("============ BOOKBOT ============")
     print(f"Analyzing book found at {filepath}...")
-    time.sleep(3)
     print("----------- Word Count ----------")
     print(f"Found {word_count} total words")
     print("--------- Character Count -------")
